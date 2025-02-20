@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import DeleteCar from './DeleteCar'
 
 function GetallCars()
 {
@@ -36,6 +37,7 @@ function GetallCars()
                     <div class="card-body">{car.type}</div>
                     <div class="card-footer">{car.color}</div>
                     <div class="card-footer">{car.myear}</div>
+                    <div><DeleteCar/></div>
                 </div>
             )
         }

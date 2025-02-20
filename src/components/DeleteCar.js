@@ -3,7 +3,7 @@ import React from 'react'
 function DeleteCar()
 {
     return (
-        <div>DeleteCar</div>
+        <div><button className='btn btn-danger'>Töröl</button></div>
     )
 }
 
