@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import DeleteCar from './DeleteCar'
+import AddNewCar from './AddNewCar'
 
-function GetallCars()
+function GetallCars(props)
 {
     const url = `https://localhost:7118/cars`
     const [carsData, setCarsData] = useState([])
+    const [carObj, setCarObj] = useState(null)
+
 
     useEffect(() =>
     {
@@ -26,25 +29,33 @@ function GetallCars()
             setCarsData(response.result)
             console.log(response.message)
         })()
-    }, [carsData])
+    }, [props.count])
+
+    const handleCarObj = (carFromCard) =>
+    {
+        setCarObj(carFromCard)
+    }
 
     const carElments = carsData.map(
         car =>
         {
             return (
-                <div class="card m-3 pt-2"style={{ 'width': 200, 'float': 'left' }}>
-                    <div class="card-header">{car.brand}</div>
-                    <div class="card-body">{car.type}</div>
-                    <div class="card-footer">{car.color}</div>
-                    <div class="card-footer">{car.myear}</div>
-                    <div><DeleteCar/></div>
+                <div onDoubleClick={()=>{handleCarObj(car)}} className="card m-3 pt-2" style={{ 'width': 200, 'float': 'left' }} key={car.id}>
+                    <div className="card-header">{car.brand}</div>
+                    <div className="card-body">{car.type}</div>
+                    <div className="card-footer">{car.color}</div>
+                    <div className="card-footer">{car.myear}</div>
+                    <div><DeleteCar carId={car.id} handleCount={props.handleCount}/></div>
                 </div>
             )
         }
     )
 
     return (
+        <> 
+        <AddNewCar handleCount={props.handleCount}/>
         <div>{carElments}</div>
+        </> //ha több elemet akarunk betenni, akkor kell egy üres tag, mert anélkül visít a react
     )
 }
 
