@@ -1,32 +1,28 @@
-import React from 'react'
+import React from "react";
+import './GetAllCars.css';
 
-function DeleteCar(props)
-{
-    const handleCarId = async () =>
-    {
-        const url = `https://localhost:7118/cars?id=${props.carId}`
+export default function DeleteCar(props) {
+    const handleCarId = async () => {
+        const url = `http://localhost:5000/Cars/CarById?id=${props.carId}`;
 
         const request = await fetch(url, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             }
-        })
+        });
 
-        if (!request.ok)
-        {
-            console.log("Hiba")
-            return
+        if (!request.ok) {
+            console.log("Hiba a törlés során");
+            return;
         }
 
-        const response = await request.json()
-        props.handleCount()
-        console.log(response.message)
-    }
+        const response = await request.json();
+        props.handleCount();
+        console.log(response.message);
+    };
 
     return (
-        <div><button className='btn btn-danger' onClick={handleCarId}>Töröl</button></div>
-    )
+        <button className='delete-button' onClick={handleCarId}>Töröl</button>
+    );
 }
-
-export default DeleteCar

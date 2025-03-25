@@ -1,35 +1,28 @@
 import React from 'react'
 
-function UpdateCar(props)
-{
-    const handleCarData = async (event) =>
-    {
-        const url = `https://localhost:7118/cars?id=${props.carData.id}`
+export default function UpdateCar(props) {
 
-        const request = await fetch(url, {
-            method: 'PUT',
-            body: JSON.stringify(props.carData),
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        if (!request.ok)
-        {
-            console.log("Hiba")
-            return
-        }
+  const handleCarData = async () => {
+    const url = `http://localhost:5000/Cars/CarById?id=${props.carId}`
+    const request = fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(props.carData)
+    })
+    if (!request.ok) {
+      console.log("error");
+      return
+    }
+    var response = await request.json();
+    props.handleCount()
+    console.log(response.message)
+  }
 
-        var response = await request.json()
-        console.log(response.message)
-        props.handleCount()
+  return (
+    <>
+    <button type="button" onClick={handleCarData} className='btn btn-warning'>Módosít</button> 
+    </>
+  )
 }
-    console.log(props.carData)
-    
-    return (
-        <button onClick={handleCarData} type='button' className='btn btn-primary'>Módosít</button>
-    )
-}
-
-
-
-export default UpdateCar
